@@ -13,13 +13,13 @@ class ScmApplicationTests {
 	}
 
 
-	@Autowired
-	private EmailService service;
-	@Test
-	 void sendEmailTest(){
-          service.sendEmail("jaywantpatil455@gmail.com ",
-				  "just Testing email Service work or not",
-				  "this is SCM Project Working on email service");
-	 }
+//	@Autowired
+//	private EmailService service;
+//	@Test
+//	 void sendEmailTest(){
+//          service.sendEmail("jaywantpatil455@gmail.com ",
+//				  "just Testing email Service work or not",
+//				  "this is SCM Project Working on email service");
+//	 }
 
 }
