@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
+
+<head>
+    <title th:text="${loggedInUser.name} + ' | SCM'">Update Profile</title>
+</head>
+
+<body>
+    <div id="content">
+        <!-- Sidebar -->
+        <div th:if="${loggedInUser}">
+            <div th:replace="~{user/sidebar :: sidebar}"></div>
+        </div>
+
+        <div class="sm:pl-64 pt-20" style="height: 1000px; z-index: 10;">
+            <div class="flex flex-col items-center">
+                <div class="w-full max-w-2xl">
+                    <div class="card block p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <div th:replace="~{message :: messagebox}"></div>
+                        <h1 class="text-2xl font-semibold">Update Profile</h1>
+
+                        <form th:action="@{/user/profile/update}" th:object="${user}" method="post" enctype="multipart/form-data" class="mt-8">
+                            <input type="hidden" th:field="*{userId}" />
+
+                            <!-- Name -->
+                            <div class="mb-3">
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User Name</label>
+                                <div class="relative mb-1">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                        <i class="fa-regular w-4 h-4 fa-user"></i>
+                                    </div>
+                                    <input th:field="*{name}" type="text"
+                                        class="bg-gray-50 border text-sm rounded-lg block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                                        placeholder="Name" />
+                                 
+                                </div>
+                            </div>
+
+                            <!-- About -->
+                            <div class="mb-3">
+                                <label for="about" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">About</label>
+                                <textarea th:field="*{about}" rows="4"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+                                
+                            </div>
+
+                            <!-- Profile Image -->
+                            <div class="mb-3">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile Image</label>
+                                <input id="image_file_input_profile" name="profileImage" type="file"
+                                    class="block w-full mb-2 text-xs text-gray-900 border rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 dark:text-white" />
+                              
+                                <img th:src="@{${user.profilePic}}" alt="Profile Image"
+                                    style="max-height: 13rem; margin: 1rem auto; border-radius: 0.5rem;" id="upload_profile_preview" />
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-3">
+                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                <div class="relative mb-1">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                                        <i class="fa-solid w-4 h-4 fa-lock"></i>
+                                    </div>
+                                    <input  type="password" name="password"
+                                        class="bg-gray-50 border text-sm rounded-lg block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        placeholder="Password" />
+                            
+                                </div>
+                            </div>
+
+                            <div class="button-container text-center mt-5">
+                                <button type="submit" class="px-3 py-2 bg-gray-500 dark:bg-blue-600 rounded text-white">Update Profile</button>
+                                <button type="reset" class="px-3 py-2 bg-gray-500 rounded text-white">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>

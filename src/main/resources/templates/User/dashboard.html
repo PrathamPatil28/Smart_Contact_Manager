@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
+<head>
+    <title th:text="${loggedInUser.name} + ' | Dashboard'">Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <!-- Sidebar -->
+    <div th:if="${loggedInUser}">
+        <div th:replace="~{user/sidebar :: sidebar}"></div>
+    </div>
+
+    <div class="sm:pl-64 pt-20">
+        <div class="text-center mb-10">
+            <h1 class="text-5xl font-bold text-gray-900 dark:text-white">Welcome, <span th:text="${loggedInUser.name}">User</span>!</h1>
+            <p class="text-gray-600 dark:text-gray-300 mt-2">Here's a summary of your account activity.</p>
+        </div>
+
+        <!-- Dashboard Switcher -->
+        <div class="flex justify-center mb-5">
+             <button id="dashboardSwitch" class="bg-gray-200 dark:bg-gray-700  hover:bg-gray-300 dark:hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors duration-300  text-gray-700 dark:text-white">Dashboard</button>
+          <button id="contactChartSwitch" class="ml-5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors duration-300  text-gray-700 dark:text-white" >Contacts</button>
+
+        </div>
+       <div id="dashboard_view">
+           <!-- Dashboard Content -->
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-10 p-5">
+               <!-- User Data Chart -->
+               <div class="chart-container">
+                   <h2 class="text-2xl text-center font-semibold text-gray-800 dark:text-white">User Activity</h2>
+                   <canvas id="userActivityChart"></canvas>
+               </div>
+
+               <!-- Contact Data Chart -->
+               <div class="chart-container">
+                   <h2 class="text-2xl text-center font-semibold text-gray-800 dark:text-white">Contact Distribution</h2>
+                   <canvas id="contactDistributionChart"></canvas>
+               </div>
+           </div>
+
+           <!-- Additional Data Section -->
+           <div class="p-5 text-center">
+               <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Quick Stats</h2>
+               <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+                   <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg">
+                       <p class="text-lg font-medium text-gray-600 dark:text-gray-300">Total Contacts</p>
+                       <h3 class="text-3xl font-bold text-gray-900 dark:text-white" th:text="${totalContacts}">0</h3>
+                   </div>
+                   <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg">
+                       <p class="text-lg font-medium text-gray-600 dark:text-gray-300">Favorite Contacts</p>
+                       <h3 class="text-3xl font-bold text-gray-900 dark:text-white" th:text="${favoriteContacts}">0</h3>
+                   </div>
+                   <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-lg">
+                       <p class="text-lg font-medium text-gray-600 dark:text-gray-300">Verified Emails</p>
+                       <h3 class="text-3xl font-bold text-gray-900 dark:text-white" th:text="${verifiedEmails}">0</h3>
+                   </div>
+               </div>
+           </div>
+
+       </div>
+
+        <div id="contact_chart_view" style="display: none;">
+            <div class="grid grid-cols-1  gap-10 p-5">
+                <div class="chart-container">
+                    <h2 class="text-2xl text-center font-semibold text-gray-800 dark:text-white">Contact Added</h2>
+                    <canvas id="contactAddedChart"></canvas>
+                </div>
+
+                  <div class="chart-container">
+                      <h2 class="text-2xl text-center font-semibold text-gray-800 dark:text-white">Contact Category</h2>
+                      <canvas id="contactCategoryChart"></canvas>
+                  </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+      const dashboardSwitchBtn = document.getElementById('dashboardSwitch');
+    const contactChartSwitchBtn = document.getElementById('contactChartSwitch');
+    const dashboardView = document.getElementById('dashboard_view');
+    const contactChartView = document.getElementById('contact_chart_view');
+    dashboardSwitchBtn.addEventListener('click', () => {
+      dashboardView.style.display="block";
+        contactChartView.style.display = "none";
+
+    });
+    contactChartSwitchBtn.addEventListener('click', () => {
+      contactChartView.style.display="block";
+        dashboardView.style.display = "none";
+    });
+
+    // Function to update chart colors based on theme
+    function updateChartColors(chart, isDarkMode) {
+        const textColor = isDarkMode ? 'white' : 'black';
+        chart.options.plugins.legend.labels.color = textColor;
+        chart.options.plugins.title.color = textColor;
+        chart.options.scales.x.ticks.color = textColor;
+        chart.options.scales.y.ticks.color = textColor;
+        chart.update();
+    }
+
+    // Example Data for User Activity Chart
+    const userActivityCtx = document.getElementById('userActivityChart').getContext('2d');
+    const userActivityChart = new Chart(userActivityCtx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+            datasets: [{
+                label: 'Logins',
+                data: [5, 10, 15, 20, 25, 30],
+                borderColor: 'rgba(173, 216, 230, 1)', // light blue
+                backgroundColor: 'rgba(173, 216, 230, 0.2)', // light blue
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                            color: 'black' // default text color for legend
+                        }
+                },
+                title: {
+                    display: true,
+                    text: 'User Activity Over Time',
+                    color: 'black' // default text color for title
+                },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: 'black' // default x axis label color
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: 'black' // default y axis label color
+                            }
+                        }
+                    }
+            }
+        }
+    });
+
+    // Example Data for Contact Distribution Chart
+    const contactDistributionCtx = document.getElementById('contactDistributionChart').getContext('2d');
+    const contactDistributionChart = new Chart(contactDistributionCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Family', 'Friends', 'Work', 'Others'],
+            datasets: [{
+                data: [30, 40, 20, 10],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(255, 205, 86, 0.6)',
+                    'rgba(201, 203, 207, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 205, 86, 1)',
+                    'rgba(201, 203, 207, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                            color: 'black' // default text color for legend
+                        }
+                },
+                title: {
+                    display: true,
+                    text: 'Contact Distribution by Category',
+                    color: 'black' // default text color for title
+                }
+            }
+        }
+    });
+
+       // Example Data for Contact Added Chart
+        const contactAddedCtx = document.getElementById('contactAddedChart').getContext('2d');
+        const contactAddedChart = new Chart(contactAddedCtx, {
+            type: 'line',
+            data: {
+                labels: /*[[${contactLabels}]]*/ [], // get labels from server
+                datasets: [{
+                    label: 'Contacts Added',
+                    data: /*[[${contactData}]]*/ [], // Get data from the server
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                            labels: {
+                            color: 'black' // default text color for legend
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Contacts Added Over Time',
+                           color: 'black' // default text color for title
+                    },
+                     scales: {
+                        x: {
+                            ticks: {
+                                color: 'black' // default x axis label color
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: 'black' // default y axis label color
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+    // Example Data for Contact Category Chart
+    const contactCategoryCtx = document.getElementById('contactCategoryChart').getContext('2d');
+    const contactCategoryChart = new Chart(contactCategoryCtx, {
+        type: 'pie',
+        data: {
+            labels: /*[[${contactCategoryLabels}]]*/ [],
+            datasets: [{
+               data: /*[[${contactCategoryData}]]*/ [],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(255, 205, 86, 0.6)',
+                    'rgba(201, 203, 207, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 205, 86, 1)',
+                    'rgba(201, 203, 207, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                            color: 'black' // default text color for legend
+                        }
+                },
+                title: {
+                    display: true,
+                    text: 'Contact Distribution by Category',
+                    color: 'black' // default text color for title
+                }
+            }
+        }
+    });
+
+    // Update chart colors based on the current theme
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    updateChartColors(userActivityChart, isDarkMode);
+    updateChartColors(contactDistributionChart, isDarkMode);
+    updateChartColors(contactAddedChart, isDarkMode);
+    updateChartColors(contactCategoryChart, isDarkMode);
+
+    // Listen for theme changes
+    const themeChangeButton = document.getElementById('theme_change_button');
+    themeChangeButton.addEventListener('click', () => {
+        const isDarkMode = document.documentElement.classList.toggle('dark');
+        updateChartColors(userActivityChart, isDarkMode);
+        updateChartColors(contactDistributionChart, isDarkMode);
+        updateChartColors(contactAddedChart, isDarkMode);
+        updateChartColors(contactCategoryChart, isDarkMode);
+    });
+
+</script>
+</body>
+</html>

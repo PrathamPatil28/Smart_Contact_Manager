@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+<head>
+  <title>About Us</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body class="dark:bg-gray-900 bg-gray-100 dark:text-white">
+  <div id="content" class="container mx-auto py-10 px-4" >
+    <!-- Conditionally include user navbar if user is logged in -->
+    <div th:if="${loggedInUser}">
+      <div th:replace="~{user/user_navbar :: user-navbar}"></div>
+    </div>
+
+    <!-- Intro Section -->
+    <section class="text-center py-10">
+      <h1 class="text-4xl font-bold mb-6">About Us</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        Welcome to Contact Manager! Our mission is to provide a secure, simple,
+        and efficient way to manage your contacts, ensuring they are always at
+        your fingertips.
+      </p>
+    </section>
+
+    <!-- Our Story Section -->
+    <section class="py-10 bg-white dark:bg-gray-800 rounded shadow-md mb-10 mt-5">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-6">Our Story</h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300 text-center">
+          Founded in 2023, Contact Manager started as a small project to help
+          individuals and businesses organize their contact information more
+          effectively. Over time, we grew into a robust platform, trusted by
+          thousands of users around the globe.
+        </p>
+      </div>
+    </section>
+
+    <!-- Our Values Section -->
+    <section class="py-10">
+      <h2 class="text-3xl font-bold text-center mb-8">Our Values</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow-md hover:shadow-lg transition">
+          <i class="fas fa-shield-alt text-blue-600 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold">Security</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Protecting your data is our top priority. We use advanced encryption
+            to ensure your information remains safe and private.
+          </p>
+        </div>
+        <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow-md hover:shadow-lg transition">
+          <i class="fas fa-users text-blue-600 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold">User-Focused</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Your needs drive our development. We continuously improve based on
+            your feedback.
+          </p>
+        </div>
+        <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow-md hover:shadow-lg transition">
+          <i class="fas fa-bolt text-blue-600 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold">Efficiency</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            We ensure our platform is quick, reliable, and easy to use, saving
+            you time and effort.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision and Mission Section -->
+    <section class="py-10 bg-white dark:bg-gray-800 rounded shadow-md">
+      <h2 class="text-3xl font-bold text-center mb-6">Vision and Mission</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="p-6 bg-gray-100 dark:bg-gray-700 rounded shadow-md hover:shadow-lg transition">
+          <h3 class="text-2xl font-bold mb-4 text-center">Our Vision</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            To become the leading contact management platform globally, helping
+            individuals and businesses stay connected effortlessly while
+            safeguarding their data.
+          </p>
+        </div>
+        <div class="p-6 bg-gray-100 dark:bg-gray-700 rounded shadow-md hover:shadow-lg transition">
+          <h3 class="text-2xl font-bold mb-4 text-center">Our Mission</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            To empower our users with innovative tools for managing their
+            contacts seamlessly, ensuring accessibility, security, and
+            reliability.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-8">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 Contact Manager. All rights reserved.</p>
+      <p>Follow us on <a href="#" class="text-blue-400">Facebook</a>, <a href="#"
+                                                                         class="text-blue-400">Twitter</a>, and <a
+              href="#" class="text-blue-400">Instagram</a>.</p>
+    </div>
+  </footer>
+  </div>
+
+  
+
+  <script>
+    
+
+    console.log("about page");
+    console.log("second about page script");
+  </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{})}">
+<head>
+  <title>Our Services</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body class="dark:bg-gray-900 bg-gray-100 dark:text-white">
+  <!-- Content Section -->
+  <section id="content" class="container mx-auto py-10 px-4" th:classappend="${loggedInUser} ? 'pt-20' : ''">
+    <!-- Conditionally include user navbar if user is logged in -->
+    <div th:if="${loggedInUser}">
+      <div th:replace="~{user/user_navbar :: user-navbar}"></div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="text-center py-10">
+      <h1 class="text-4xl font-bold mb-6">Our Services</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        At SCM, we offer a comprehensive suite of services designed to optimize your supply chain and streamline your operations.
+      </p>
+    </div>
+
+    <!-- Services List -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Service 1 -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow-md hover:shadow-lg transition">
+        <i class="fas fa-truck text-blue-600 text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Logistics Management</h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Ensure efficient movement of goods from one location to another with our reliable logistics solutions.
+        </p>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow-md hover:shadow-lg transition">
+        <i class="fas fa-cogs text-blue-600 text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Process Automation</h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Automate repetitive tasks and streamline operations with our cutting-edge automation tools.
+        </p>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow-md hover:shadow-lg transition">
+        <i class="fas fa-chart-line text-blue-600 text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Data Analytics</h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Leverage advanced analytics to gain insights into your supply chain and make informed decisions.
+        </p>
+      </div>
+
+      <!-- Service 4 -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow-md hover:shadow-lg transition">
+        <i class="fas fa-shield-alt text-blue-600 text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Risk Management</h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Identify and mitigate potential risks in your supply chain with our expert solutions.
+        </p>
+      </div>
+
+      <!-- Service 5 -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow-md hover:shadow-lg transition">
+        <i class="fas fa-warehouse text-blue-600 text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Inventory Optimization</h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Keep your inventory levels optimal and reduce waste with our tailored strategies.
+        </p>
+      </div>
+
+      <!-- Service 6 -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded shadow-md hover:shadow-lg transition">
+        <i class="fas fa-headset text-blue-600 text-4xl mb-4"></i>
+        <h3 class="text-xl font-semibold mb-2">Customer Support</h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Get 24/7 assistance for any queries or issues related to our services and your supply chain.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 SCM Services. All rights reserved.</p>
+      <p>Follow us on <a href="#" class="text-blue-400">Facebook</a>, <a href="#"
+        class="text-blue-400">Twitter</a>, and <a href="#" class="text-blue-400">Instagram</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>

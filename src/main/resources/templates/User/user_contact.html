@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
+<head>
+  <title>Contact Us</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body class="dark:bg-gray-900 bg-gray-100 dark:text-white">
+  <!-- Content Section -->
+  <div id="content" class="container mx-auto py-10 px-4">
+    <!-- Conditionally include user navbar if user is logged in -->
+    <div th:if="${loggedInUser}">
+      <div th:replace="~{user/user_navbar :: user-navbar}"></div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="text-center py-10">
+      <h1 class="text-4xl font-bold mb-6">Contact Us</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        We'd love to hear from you! Reach out to us with your questions,
+        comments, or feedback.
+      </p>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="bg-white dark:bg-gray-800 rounded shadow-md p-6">
+      <h2 class="text-3xl font-bold text-center mb-6">Get in Touch</h2>
+      <form class="grid grid-cols-1 gap-6 md:grid-cols-2"
+      th:action="@{/contact-submit}"
+      th:object="${contactUsForm}"
+      method="post"
+      novalidate
+      >
+      
+       <div>
+         <label for="name" class="block text-sm font-medium">Name</label>
+         <input
+           type="text"
+           id="name"
+           th:field="*{name}"
+           class="mt-1 block w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 dark:bg-gray-900"
+           placeholder="Your Full Name"
+          
+         />
+         <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-600"></p>
+       </div>
+
+       <!-- Email -->
+       <div>
+         <label for="email" class="block text-sm font-medium">Email</label>
+         <input
+           type="email"
+           id="email"
+           th:field="*{email}"
+           class="mt-1 block w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 dark:bg-gray-900"
+           placeholder="Your Email Address"
+          
+         />
+         <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-600"></p>
+       </div>
+
+       <!-- Subject -->
+       <div class="col-span-2">
+         <label for="subject" class="block text-sm font-medium">Subject</label>
+         <input
+           type="text"
+           id="subject"
+           th:field="*{subject}"
+           class="mt-1 block w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 dark:bg-gray-900"
+           placeholder="Subject"
+      
+         />
+          <p th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="text-red-600"></p>
+       </div>
+
+       <!-- Message -->
+       <div class="col-span-2">
+         <label for="message" class="block text-sm font-medium">Message</label>
+         <textarea
+           id="message"
+           name="message"
+           rows="5"
+            th:field="*{message}"
+           class="mt-1 block w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 dark:bg-gray-900"
+           placeholder="Your Message"
+         
+         ></textarea>
+
+          <p th:if="${#fields.hasErrors('message')}" th:errors="*{message}" class="text-red-600"></p>
+       </div>
+
+       <!-- Submit Button -->
+       <div class="col-span-2 text-center">
+         <button
+           type="submit"
+           class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-md transition"
+         >
+           Send Message
+         </button>
+       </div>
+     </form>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="py-10 text-center">
+      <h2 class="text-3xl font-bold mb-6">Contact Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Address -->
+        <div>
+          <i class="fas fa-map-marker-alt text-blue-600 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold">Address</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            123 SCM Street, Business City, Country
+          </p>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <i class="fas fa-phone text-blue-600 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold">Phone</h3>
+          <p class="text-gray-600 dark:text-gray-300">+1 (123) 456-7890</p>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <i class="fas fa-envelope text-blue-600 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold">Email</h3>
+          <p class="text-gray-600 dark:text-gray-300">contact@scmservices.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 SCM Services. All rights reserved.</p>
+      <p>Follow us on <a href="#" class="text-blue-400">Facebook</a>, <a href="#"
+        class="text-blue-400">Twitter</a>, and <a href="#" class="text-blue-400">Instagram</a>.</p>
+    </div>
+  </footer>
+
+  <script>
+    console.log("Contact Us page script executed.");
+  </script>
+</body>
+</html>
