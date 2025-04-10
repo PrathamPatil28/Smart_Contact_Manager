@@ -36,6 +36,16 @@ Whether you're a professional, student, or business user, this tool ensures that
 
 ## 📸 Screenshots
 
+Home Page :
+![Screenshot SCM Home Page](https://github.com/user-attachments/assets/53b1ea42-fc90-4dc7-acac-a6cffb995df9)
+
+Add Contact Page :
+![Screenshot SCM Add Contact Page](https://github.com/user-attachments/assets/458bc3cd-2de7-4359-a5de-2e799a11c0a0)
+
+Login Page : 
+![Screenshot SCM Login Page](https://github.com/user-attachments/assets/a4b145ce-2dc1-47cd-8579-a6bb7fd2c693)
+
+
 
 
 ---
